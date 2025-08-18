@@ -3,13 +3,61 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Md Taj Hasan — Resume</title>
+    <title>One-page A4 Resume</title>
+
+    <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <meta
-      name="description"
-      content="Resume of Md Taj Hasan (Applied Mathematics)"
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: "#eef2ff",
+                100: "#e0e7ff",
+                200: "#c7d2fe",
+                300: "#a5b4fc",
+                400: "#818cf8",
+                500: "#6366f1",
+                600: "#4f46e5",
+                700: "#4338ca",
+                800: "#3730a3",
+                900: "#312e81",
+              },
+            },
+            fontFamily: {
+              sans: [
+                "Inter",
+                "system-ui",
+                "Segoe UI",
+                "Roboto",
+                "Arial",
+                "sans-serif",
+              ],
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
     />
+
+    <!-- html2pdf (bundles html2canvas + jsPDF) -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIY5x2H+4m+Z4YKB2FgsZ3fZ1YqfN0CB9ZCkXtqKkK2ZL3rW4J5fJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
     <style>
+      /* Page + print setup for exact A4 */
       @page {
         size: A4;
         margin: 0;
@@ -17,252 +65,96 @@
       html,
       body {
         height: 100%;
-        margin: 0; /* ensure no UA body margin in any context */
       }
-
-      /* When generating PDF via html2pdf, drop shadows to avoid captured extra space */
-      .pdf-mode #page {
-        box-shadow: none !important;
+      body {
+        background: #0f172a0d;
       }
-
+      .no-print {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .screen-only {
+        display: block;
+      }
+      .print-hidden {
+        display: block;
+      }
       @media print {
         body {
-          -webkit-print-color-adjust: exact;
-          print-color-adjust: exact;
+          background: white;
         }
-        /* Remove outer spacing to maximize printable area */
-        .no-print {
+        .screen-only {
           display: none !important;
         }
-        .shadow-print-none {
+        .print-hidden {
+          display: none !important;
+        }
+        #resume-page {
           box-shadow: none !important;
-        }
-        /* Center page and prevent accidental overflows */
-        #page {
-          margin: 0 auto !important;
-          box-shadow: none !important; /* ensure no shadow is printed */
-          width: 210mm !important;
-          min-height: 297mm !important;
-        }
-
-        /* Remove container padding/margins in print to avoid top gap */
-        .max-w-screen-lg {
-          padding: 0 !important;
           margin: 0 !important;
         }
-
-        html,
-        body {
-          margin: 0 !important;
-          padding: 0 !important;
-        }
+      }
+      /* A4 canvas wrapper */
+      #resume-page {
+        width: 210mm; /* A4 width */
+        min-height: 297mm; /* ensure at least A4 height */
+        background: white;
+      }
+      /* Scaling wrapper to auto-fit content vertically on the page */
+      #scale-wrap {
+        transform-origin: top left;
       }
     </style>
   </head>
-  <body class="bg-slate-100 text-slate-900">
-    <div class="max-w-screen-lg mx-auto px-4 py-6">
-      <!-- Controls -->
-      <div class="no-print flex items-center justify-end gap-2 mb-4">
-        <button
-          id="btnPrint"
-          class="px-3 py-1.5 rounded-md bg-blue-700 text-white hover:bg-blue-800 text-sm"
-        >
-          Download PDF
-        </button>
-      </div>
-
-      <!-- Page -->
+  <body class="font-sans text-slate-800 antialiased">
+    <!-- Actions Bar -->
+    <div
+      class="screen-only sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-200"
+    >
       <div
-        id="page"
-        class="w-[210mm] min-h-[297mm] bg-white shadow shadow-slate-200 shadow-print-none mx-auto"
+        class="mx-auto max-w-5xl px-4 py-2 flex items-center justify-between gap-3"
       >
-        <!-- Header -->
-        <div class="relative">
-          <div class="h-10 bg-[#0E3A8A]"></div>
-          <div class="px-6 pt-3 pb-4 border-b border-slate-200">
-            <h1 id="name" class="text-2xl font-bold text-slate-900">
-              Md Taj Hasan
-            </h1>
-            <p id="tagline" class="text-sm text-slate-600">
-              M.Sc. Applied Mathematics | Aspiring Educator & Problem Solver
-            </p>
-
-            <div
-              class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[13px]"
-            >
-              <a
-                id="emailLink"
-                class="text-slate-800 hover:text-blue-700"
-                href="#"
-                >✉ <span id="emailText"></span
-              ></a>
-              <span class="text-slate-400">•</span>
-              <a
-                id="phoneLink"
-                class="text-slate-800 hover:text-blue-700"
-                href="#"
-                ><span id="phoneText"></span
-              ></a>
-              <span class="text-slate-400">•</span>
-              <span id="locationText" class="text-slate-800"></span>
-              <span class="text-slate-400">•</span>
-              <a
-                id="linkedinLink"
-                class="text-blue-700 hover:underline"
-                target="_blank"
-                rel="noopener"
-                >LinkedIn: <span id="linkedinText"></span
-              ></a>
-            </div>
-          </div>
+        <div class="text-sm text-slate-600">
+          A4 one-page resume. Optimize for humans, not just design.
         </div>
-
-        <!-- Body: two columns -->
-        <div class="grid grid-cols-[64mm_1fr] gap-6 p-5">
-          <!-- Sidebar -->
-          <aside class="bg-[#E6F0FF] rounded-sm px-4 py-4">
-            <section class="mb-4">
-              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1.5">
-                Profile
-              </h2>
-              <p id="profile" class="text-[13px] leading-5 text-slate-800"></p>
-            </section>
-
-            <section class="mb-4">
-              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1.5">
-                Teaching Interests
-              </h2>
-              <ul
-                id="teaching"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <section class="mb-4">
-              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1.5">
-                Skills
-              </h2>
-              <div id="skills" class="space-y-2"></div>
-            </section>
-
-            <section class="mb-4">
-              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1.5">
-                Languages
-              </h2>
-              <ul
-                id="languages"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <section>
-              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1.5">
-                Research Interests
-              </h2>
-              <ul
-                id="research"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-          </aside>
-
-          <!-- Main -->
-          <main>
-            <section class="mb-3">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Education
-              </h2>
-              <div id="education" class="space-y-2"></div>
-            </section>
-
-            <hr class="border-slate-300/60 my-3" />
-
-            <section class="mb-4">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Relevant Coursework
-              </h2>
-              <div
-                id="coursework"
-                class="grid grid-cols-2 text-[13px] border border-slate-300 rounded-sm divide-x divide-slate-300"
-              >
-                <!-- rows injected by JS -->
-              </div>
-            </section>
-
-            <hr class="border-slate-300/60 my-3" />
-
-            <section class="mb-3">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Projects
-              </h2>
-              <ul
-                id="projects"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <hr class="border-slate-300/60 my-3" />
-
-            <section class="mb-3">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Achievements
-              </h2>
-              <ul
-                id="achievements"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <hr class="border-slate-300/60 my-3" />
-
-            <section class="mb-3">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Positions of Responsibility
-              </h2>
-              <ul
-                id="positions"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <hr class="border-slate-300/60 my-3" />
-
-            <section class="mb-3">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Certifications & Workshops
-              </h2>
-              <ul
-                id="certifications"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <hr class="border-slate-300/60 my-0" />
-
-            <section class="mb-1">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                References
-              </h2>
-              <ul
-                id="references"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-          </main>
+        <div class="flex items-center gap-2">
+          <button
+            id="fitBtn"
+            class="print-hidden inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          >
+            Auto-fit
+          </button>
+          <button
+            id="printBtn"
+            class="print-hidden inline-flex items-center gap-2 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          >
+            Print
+          </button>
+          <button
+            id="downloadBtn"
+            class="print-hidden inline-flex items-center gap-2 rounded-md bg-brand-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-brand-700"
+          >
+            Download PDF
+          </button>
         </div>
-
-        <!-- Footer -->
-        <!-- <div class="px-6 pb-5 text-center text-xs text-slate-500">Page 1</div> -->
       </div>
     </div>
 
-    <!-- html2pdf for clean PDF export without browser headers/footers -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-      integrity="sha512-YcsIPWZf96tqM0bRFTv1MZ+q9y5YkzjQ5q0VqkW3Om8XlD5VJb4gZrGPGw5P3YyM3kQwVh0sTx3nWZCw4iZ0NQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+    <!-- Resume Page Canvas -->
+    <main class="mx-auto my-6 max-w-5xl px-4">
+      <div
+        id="resume-page"
+        class="mx-auto shadow-2xl ring-1 ring-black/5 rounded-sm"
+      >
+        <div id="scale-wrap">
+          <div id="resume-root" class="p-8">
+            <!-- Populated by script.js from data.js -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Data then renderer -->
     <script src="./data.js"></script>
     <script src="./script.js"></script>
   </body>
