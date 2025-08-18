@@ -18,15 +18,47 @@
     return e;
   };
 
+  // Normalize a numeric value to 0–100 percentage (accepts 0–1 or 0–100)
+  const toPercent = (val) => {
+    const n = Number(val);
+    if (!isFinite(n)) return 0;
+    if (n <= 1) return Math.max(0, Math.min(100, Math.round(n * 100)));
+    return Math.max(0, Math.min(100, Math.round(n)));
+  };
+
+  const iconFor = (title) => {
+    const map = {
+      Profile: "👤",
+      Education: "🎓",
+      Coursework: "📚",
+      Projects: "🚀",
+      Achievements: "🏆",
+      "Teaching Interests": "🧑‍🏫",
+      Skills: "✨",
+      Languages: "🌐",
+      "Research Interests": "🔬",
+      "Positions of Responsibility": "👥",
+      Certifications: "📜",
+      References: "🤝",
+    };
+    return map[title] || "•";
+  };
+
   const section = (title) => {
-    const wrap = el("section", "mt-3 first:mt-0");
-    const h = el(
-      "h3",
-      "text-[10pt] font-semibold tracking-wide text-gray-800 flex items-center gap-2 uppercase"
+    const wrap = el("section", "mt-4 first:mt-0");
+    const h = el("div", "flex items-center gap-2 text-gray-800");
+    const ico = el(
+      "span",
+      "shrink-0 inline-grid place-items-center h-5 w-5 rounded-full bg-primary-100 text-[10pt]",
+      iconFor(title)
     );
-    const bar = el("span", "h-[10px] w-1 rounded bg-primary-600 inline-block");
-    const t = el("span", "", title);
-    h.append(bar, t);
+    const t = el(
+      "h3",
+      "text-[10pt] font-semibold tracking-wide uppercase",
+      title
+    );
+    const line = el("div", "ml-2 h-px bg-gray-200 flex-1");
+    h.append(ico, t, line);
     wrap.appendChild(h);
     return wrap;
   };
@@ -34,36 +66,71 @@
   const bulletList = (items) => {
     const ul = el(
       "ul",
-      "list-disc ml-5 text-[9.5pt] text-gray-800 grid grid-cols-2 gap-x-6"
+      "mt-1 grid grid-cols-2 gap-x-6 gap-y-1 text-[9.5pt] text-gray-800"
     );
-    items.forEach((it) => ul.appendChild(el("li", "", it)));
+    items.forEach((it) => {
+      const li = el("li", "flex items-start gap-2");
+      li.appendChild(
+        el("span", "mt-1 h-1.5 w-1.5 rounded-full bg-primary-600 shrink-0")
+      );
+      li.appendChild(el("span", "", it));
+      ul.appendChild(li);
+    });
     return ul;
   };
 
   const pill = (text) =>
     el(
       "span",
-      "px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 border border-gray-200 text-[9pt]",
+      "px-2 py-0.5 rounded-full bg-primary-50 text-primary-800 border border-primary-200 text-[9pt]",
       text
     );
 
   const levelBar = (value) => {
-    const outer = el("div", "h-1.5 bg-gray-200 rounded");
-    const inner = el("div", "h-1.5 bg-primary-600 rounded");
-    inner.style.width = `${Math.round(Math.min(Math.max(value, 0), 1) * 100)}%`;
+    const pct = toPercent(value);
+    const row = el("div", "flex items-center gap-2");
+    const outer = el("div", "flex-1 min-w-0 overflow-hidden");
+    // Inline fallback styles so Tailwind is not required
+    outer.style.height = "8px"; // ~h-2
+    outer.style.background = "#e5e7eb"; // gray-200
+    outer.style.borderRadius = "9999px"; // rounded-full
+
+    const inner = el("div", "", "");
+    inner.style.height = "100%";
+    inner.style.width = pct + "%";
+    inner.style.background = "linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%)"; // blue-500 -> blue-700
+    inner.style.borderRadius = "inherit";
     outer.appendChild(inner);
-    return outer;
+
+    const label = el("span", "w-10 text-right", `${pct}%`);
+    label.style.fontSize = "8.75pt";
+    label.style.color = "#4b5563"; // gray-600
+    row.appendChild(outer);
+    row.appendChild(label);
+    return row;
   };
 
-  const contactRow = () => {
-    const row = el("div", "flex flex-wrap gap-3 text-[9.5pt] text-gray-700");
-    if (data.email) row.appendChild(el("div", "", `✉️ ${data.email}`));
-    if (data.phone) row.appendChild(el("div", "", `📞 ${data.phone}`));
-    if (data.location) row.appendChild(el("div", "", `📍 ${data.location}`));
+  const contactRow = (variant = "chips") => {
+    const base =
+      variant === "chips"
+        ? "px-2 py-1 rounded-full border bg-white/10 border-white/20 text-white/90"
+        : "";
+    const row = el(
+      "div",
+      variant === "chips"
+        ? "flex flex-wrap gap-2 text-[9.25pt]"
+        : "flex flex-wrap gap-3 text-[9.5pt] text-gray-700"
+    );
+    if (data.email) row.appendChild(el("div", base, `✉️ ${data.email}`));
+    if (data.phone) row.appendChild(el("div", base, `📞 ${data.phone}`));
+    if (data.location) row.appendChild(el("div", base, `📍 ${data.location}`));
     if (data.linkedin?.url) {
       const a = el(
         "a",
-        "text-primary-700 hover:underline",
+        base +
+          (variant === "chips"
+            ? " hover:bg-white/15"
+            : " text-primary-700 hover:underline"),
         `in/${data.linkedin.text || "LinkedIn"}`
       );
       a.href = data.linkedin.url;
@@ -74,20 +141,28 @@
   };
 
   // Header
-  const header = el(
-    "header",
-    "flex items-start justify-between gap-6 pb-3 border-b border-gray-200"
+  const header = el("header", "");
+  const banner = el(
+    "div",
+    "rounded-md bg-blue-700 bg-gradient-to-r from-primary-700 via-primary-600 to-primary-700 text-white p-5"
   );
+  // Fallbacks if Tailwind classes or gradients fail to load
+  try {
+    banner.style.background =
+      "linear-gradient(90deg, #1d4ed8 0%, #2563eb 50%, #1d4ed8 100%)"; // primary-700 -> primary-600 -> primary-700
+    banner.style.color = "#ffffff";
+    banner.style.borderRadius = "0.375rem"; // rounded-md
+    banner.style.padding = "1.25rem"; // p-5
+  } catch {}
+  const top = el("div", "flex items-start justify-between gap-4");
   const titleWrap = el("div", "flex-1");
   titleWrap.appendChild(
-    el("h1", "text-2xl font-bold text-gray-900", data.name)
+    el("h1", "text-[18pt] leading-tight font-bold", data.name)
   );
   if (data.tagline)
     titleWrap.appendChild(
-      el("div", "text-gray-700 text-[10.5pt] mt-0.5", data.tagline)
+      el("div", "text-white/90 text-[10.75pt] mt-1", data.tagline)
     );
-  titleWrap.appendChild(el("div", "mt-2", ""));
-  titleWrap.lastChild.appendChild(contactRow());
 
   const badge = el("div", "text-right min-w-[140px]");
   const today = new Date();
@@ -98,12 +173,15 @@
   badge.appendChild(
     el(
       "div",
-      "inline-block px-2 py-1 rounded bg-primary-50 text-primary-700 text-[9pt] border border-primary-200",
+      "inline-block px-2 py-1 rounded-full bg-white/10 text-white text-[9pt] border border-white/20",
       `Updated ${dateStr}`
     )
   );
-
-  header.append(titleWrap, badge);
+  top.append(titleWrap, badge);
+  const contacts = contactRow("chips");
+  contacts.classList.add("mt-3");
+  banner.append(top, contacts);
+  header.appendChild(banner);
 
   // Body layout: two columns with smart proportions
   const grid = el("div", "grid grid-cols-5 gap-6 mt-4");
@@ -139,9 +217,14 @@
       "div",
       "mt-1 grid grid-cols-2 gap-x-6 gap-y-1 text-[9.25pt]"
     );
-    data.coursework.forEach((c) =>
-      gridcw.appendChild(el("div", "text-gray-800", `• ${c}`))
-    );
+    data.coursework.forEach((c) => {
+      const row = el("div", "flex items-start gap-2 text-gray-800");
+      row.appendChild(
+        el("span", "mt-1 h-1.5 w-1.5 rounded-full bg-primary-500")
+      );
+      row.appendChild(el("span", "", c));
+      gridcw.appendChild(row);
+    });
     s.appendChild(gridcw);
     left.appendChild(s);
   }
@@ -150,9 +233,14 @@
   if (Array.isArray(data.projects) && data.projects.length) {
     const s = section("Projects");
     const list = el("ul", "mt-1 space-y-1 text-[9.5pt]");
-    data.projects.forEach((p) =>
-      list.appendChild(el("li", "text-gray-800", `• ${p}`))
-    );
+    data.projects.forEach((p) => {
+      const li = el("li", "flex items-start gap-2 text-gray-800");
+      li.appendChild(
+        el("span", "mt-1 h-1.5 w-1.5 rounded-full bg-primary-600")
+      );
+      li.appendChild(el("span", "", p));
+      list.appendChild(li);
+    });
     s.appendChild(list);
     left.appendChild(s);
   }
@@ -161,9 +249,14 @@
   if (Array.isArray(data.achievements) && data.achievements.length) {
     const s = section("Achievements");
     const list = el("ul", "mt-1 space-y-1 text-[9.5pt]");
-    data.achievements.forEach((a) =>
-      list.appendChild(el("li", "text-gray-800", `• ${a}`))
-    );
+    data.achievements.forEach((a) => {
+      const li = el("li", "flex items-start gap-2 text-gray-800");
+      li.appendChild(
+        el("span", "mt-1 h-1.5 w-1.5 rounded-full bg-primary-600")
+      );
+      li.appendChild(el("span", "", a));
+      list.appendChild(li);
+    });
     s.appendChild(list);
     left.appendChild(s);
   }
@@ -207,9 +300,14 @@
   if (Array.isArray(data.positions) && data.positions.length) {
     const s = section("Positions of Responsibility");
     const list = el("ul", "mt-1 space-y-1 text-[9.5pt]");
-    data.positions.forEach((p) =>
-      list.appendChild(el("li", "text-gray-800", `• ${p}`))
-    );
+    data.positions.forEach((p) => {
+      const li = el("li", "flex items-start gap-2 text-gray-800");
+      li.appendChild(
+        el("span", "mt-1 h-1.5 w-1.5 rounded-full bg-primary-600")
+      );
+      li.appendChild(el("span", "", p));
+      list.appendChild(li);
+    });
     s.appendChild(list);
     right.appendChild(s);
   }
@@ -217,9 +315,14 @@
   if (Array.isArray(data.certifications) && data.certifications.length) {
     const s = section("Certifications");
     const list = el("ul", "mt-1 space-y-1 text-[9.5pt]");
-    data.certifications.forEach((c) =>
-      list.appendChild(el("li", "text-gray-800", `• ${c}`))
-    );
+    data.certifications.forEach((c) => {
+      const li = el("li", "flex items-start gap-2 text-gray-800");
+      li.appendChild(
+        el("span", "mt-1 h-1.5 w-1.5 rounded-full bg-primary-600")
+      );
+      li.appendChild(el("span", "", c));
+      list.appendChild(li);
+    });
     s.appendChild(list);
     right.appendChild(s);
   }
@@ -227,9 +330,14 @@
   if (Array.isArray(data.references) && data.references.length) {
     const s = section("References");
     const list = el("ul", "mt-1 space-y-1 text-[9.5pt]");
-    data.references.forEach((r) =>
-      list.appendChild(el("li", "text-gray-800", `• ${r}`))
-    );
+    data.references.forEach((r) => {
+      const li = el("li", "flex items-start gap-2 text-gray-800");
+      li.appendChild(
+        el("span", "mt-1 h-1.5 w-1.5 rounded-full bg-primary-600")
+      );
+      li.appendChild(el("span", "", r));
+      list.appendChild(li);
+    });
     s.appendChild(list);
     right.appendChild(s);
   }
