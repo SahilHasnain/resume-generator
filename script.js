@@ -191,15 +191,33 @@ function setupPrint() {
     const page = document.getElementById("page");
     // Prefer html2pdf when available to avoid browser date/url headers
     if (window.html2pdf) {
+      // Ensure capture with zero margins and no shadows
+      document.body.classList.add("pdf-mode");
+      // Avoid scroll offset affecting capture
+      window.scrollTo(0, 0);
       const opt = {
         margin: [0, 0, 0, 0], // mm
         filename: `Md_Taj_Hasan_Resume.pdf`,
         image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff" },
+        html2canvas: {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: "#ffffff",
+          scrollX: 0,
+          scrollY: 0,
+        },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
         pagebreak: { avoid: [".avoid-break"], mode: ["css", "legacy"] },
       };
-      window.html2pdf().set(opt).from(page).save();
+      window
+        .html2pdf()
+        .set(opt)
+        .from(page)
+        .save()
+        .finally(() => {
+          // Clean up
+          document.body.classList.remove("pdf-mode");
+        });
     } else {
       window.print();
     }

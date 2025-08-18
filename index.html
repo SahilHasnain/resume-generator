@@ -17,7 +17,14 @@
       html,
       body {
         height: 100%;
+        margin: 0; /* ensure no UA body margin in any context */
       }
+
+      /* When generating PDF via html2pdf, drop shadows to avoid captured extra space */
+      .pdf-mode #page {
+        box-shadow: none !important;
+      }
+
       @media print {
         body {
           -webkit-print-color-adjust: exact;
@@ -33,6 +40,21 @@
         /* Center page and prevent accidental overflows */
         #page {
           margin: 0 auto !important;
+          box-shadow: none !important; /* ensure no shadow is printed */
+          width: 210mm !important;
+          min-height: 297mm !important;
+        }
+
+        /* Remove container padding/margins in print to avoid top gap */
+        .max-w-screen-lg {
+          padding: 0 !important;
+          margin: 0 !important;
+        }
+
+        html,
+        body {
+          margin: 0 !important;
+          padding: 0 !important;
         }
       }
     </style>
@@ -230,8 +252,8 @@
         </div>
 
         <!-- Footer -->
-        <!-- <div class="px-6 pb-5 text-center text-xs text-slate-500">Page 1</div>
-      </div> -->
+        <!-- <div class="px-6 pb-5 text-center text-xs text-slate-500">Page 1</div> -->
+      </div>
     </div>
 
     <!-- html2pdf for clean PDF export without browser headers/footers -->
