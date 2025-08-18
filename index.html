@@ -12,18 +12,27 @@
     <style>
       @page {
         size: A4;
-        margin: 12mm;
+        margin: 0;
+      }
+      html,
+      body {
+        height: 100%;
       }
       @media print {
         body {
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
         }
+        /* Remove outer spacing to maximize printable area */
         .no-print {
           display: none !important;
         }
         .shadow-print-none {
           box-shadow: none !important;
+        }
+        /* Center page and prevent accidental overflows */
+        #page {
+          margin: 0 auto !important;
         }
       }
     </style>
@@ -225,6 +234,13 @@
       </div>
     </div>
 
+    <!-- html2pdf for clean PDF export without browser headers/footers -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-YcsIPWZf96tqM0bRFTv1MZ+q9y5YkzjQ5q0VqkW3Om8XlD5VJb4gZrGPGw5P3YyM3kQwVh0sTx3nWZCw4iZ0NQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script src="./script.js"></script>
   </body>
 </html>

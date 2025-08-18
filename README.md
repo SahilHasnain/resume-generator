@@ -10,10 +10,19 @@ This folder now includes a web-based version of the resume that mirrors the PDF 
 ## How to use
 
 1. Double-click `index.html` to open in your browser.
-2. Click the “Download PDF” button, or use the browser’s Print dialog (Ctrl/Cmd+P) and choose “Save as PDF”.
-   - Paper size: A4
-   - Margins: Default (document sets ~12mm)
-   - Enable background graphics
+2. Click the “Download PDF” button for a clean PDF (no browser date/URL header or footer). This uses html2pdf.
+
+   - Paper: A4
+   - Margins: Built-in (button export ignores browser headers)
+   - Background graphics: Enabled by default
+
+   Fallback: If you prefer the browser print dialog (Ctrl/Cmd+P), set
+
+   - Destination: Save as PDF
+   - Paper: A4
+   - Margins: None
+   - Disable Headers and Footers (so date/URL won’t appear)
+   - Enable Background graphics
 
 ## Customize content
 
