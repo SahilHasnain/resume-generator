@@ -3,266 +3,138 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Md Taj Hasan — Resume</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <meta
-      name="description"
-      content="Resume of Md Taj Hasan (Applied Mathematics)"
+    <title>Resume</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
     />
+
+    <!-- Tailwind via CDN -->
+    <script>
+      window.tailwind = {};
+    </script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "Inter",
+                "ui-sans-serif",
+                "system-ui",
+                "Segoe UI",
+                "Roboto",
+                "Helvetica Neue",
+                "Arial",
+                "Noto Sans",
+                "Apple Color Emoji",
+                "Segoe UI Emoji",
+                "Segoe UI Symbol",
+              ],
+            },
+            colors: {
+              primary: {
+                50: "#eef6ff",
+                100: "#dbeafe",
+                200: "#bfdbfe",
+                300: "#93c5fd",
+                400: "#60a5fa",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#1e3a8a",
+              },
+            },
+          },
+        },
+        corePlugins: { preflight: true },
+      };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- html2pdf for PDF export -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+      integrity="sha512-YcsIPa8vA9sQwQbN8JQwB5hNQXZ2tE8y1b0xVvYVJa1+8fU3Q4m8aU8/2q2uC4r6bJ8G4iJr6w0N1n7xwKQDLw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
     <style>
       @page {
         size: A4;
         margin: 0;
       }
-      html,
-      body {
-        height: 100%;
-        margin: 0; /* ensure no UA body margin in any context */
-      }
-
-      /* When generating PDF via html2pdf, drop shadows to avoid captured extra space */
-      .pdf-mode #page {
-        box-shadow: none !important;
-      }
-
       @media print {
         body {
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
+          background: white !important;
         }
-        /* Remove outer spacing to maximize printable area */
+        #controls {
+          display: none !important;
+        }
         .no-print {
           display: none !important;
         }
-        .shadow-print-none {
+        .page-shadow {
           box-shadow: none !important;
         }
-        /* Center page and prevent accidental overflows */
-        #page {
-          margin: 0 auto !important;
-          box-shadow: none !important; /* ensure no shadow is printed */
-          width: 210mm !important;
-          min-height: 297mm !important;
-        }
-
-        /* Remove container padding/margins in print to avoid top gap */
-        .max-w-screen-lg {
-          padding: 0 !important;
-          margin: 0 !important;
-        }
-
-        html,
-        body {
-          margin: 0 !important;
-          padding: 0 !important;
-        }
+      }
+      html,
+      body {
+        height: 100%;
       }
     </style>
   </head>
-  <body class="bg-slate-100 text-slate-900">
-    <div class="max-w-screen-lg mx-auto px-4 py-6">
-      <!-- Controls -->
-      <div class="no-print flex items-center justify-end gap-2 mb-4">
-        <button
-          id="btnPrint"
-          class="px-3 py-1.5 rounded-md bg-blue-700 text-white hover:bg-blue-800 text-sm"
-        >
-          Download PDF
-        </button>
-      </div>
-
-      <!-- Page -->
+  <body class="bg-gray-100 text-gray-900 font-sans">
+    <!-- Controls -->
+    <div
+      id="controls"
+      class="sticky top-0 z-10 bg-white/80 backdrop-blur border-b border-gray-200"
+    >
       <div
-        id="page"
-        class="w-[210mm] min-h-[297mm] bg-white shadow shadow-slate-200 shadow-print-none mx-auto"
+        class="max-w-screen-lg mx-auto px-4 py-3 flex items-center gap-2 justify-between"
       >
-        <!-- Header -->
-        <div class="relative">
-          <div class="h-10 bg-[#0E3A8A]"></div>
-          <div class="px-6 pt-3 pb-4 border-b border-slate-200">
-            <h1 id="name" class="text-2xl font-bold text-slate-900">
-              Md Taj Hasan
-            </h1>
-            <p id="tagline" class="text-sm text-slate-600">
-              M.Sc. Applied Mathematics | Aspiring Educator & Problem Solver
-            </p>
-
-            <div
-              class="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[13px]"
-            >
-              <a
-                id="emailLink"
-                class="text-slate-800 hover:text-blue-700"
-                href="#"
-                >✉ <span id="emailText"></span
-              ></a>
-              <span class="text-slate-400">•</span>
-              <a
-                id="phoneLink"
-                class="text-slate-800 hover:text-blue-700"
-                href="#"
-                ><span id="phoneText"></span
-              ></a>
-              <span class="text-slate-400">•</span>
-              <span id="locationText" class="text-slate-800"></span>
-              <span class="text-slate-400">•</span>
-              <a
-                id="linkedinLink"
-                class="text-blue-700 hover:underline"
-                target="_blank"
-                rel="noopener"
-                >LinkedIn: <span id="linkedinText"></span
-              ></a>
-            </div>
-          </div>
+        <div class="text-sm text-gray-600">One-page A4 resume preview</div>
+        <div class="flex items-center gap-2">
+          <button
+            id="btn-download"
+            class="px-3 py-1.5 rounded-md bg-primary-600 text-white text-sm font-medium hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-400"
+          >
+            Download PDF
+          </button>
+          <button
+            id="btn-print"
+            class="px-3 py-1.5 rounded-md border border-gray-300 text-gray-700 text-sm font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-400"
+          >
+            Print
+          </button>
         </div>
-
-        <!-- Body: two columns -->
-        <div class="grid grid-cols-[64mm_1fr] gap-6 p-5">
-          <!-- Sidebar -->
-          <aside class="bg-[#E6F0FF] rounded-sm px-4 py-4">
-            <section class="mb-4">
-              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1.5">
-                Profile
-              </h2>
-              <p id="profile" class="text-[13px] leading-5 text-slate-800"></p>
-            </section>
-
-            <section class="mb-4">
-              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1.5">
-                Teaching Interests
-              </h2>
-              <ul
-                id="teaching"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <section class="mb-4">
-              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1.5">
-                Skills
-              </h2>
-              <div id="skills" class="space-y-2"></div>
-            </section>
-
-            <section class="mb-4">
-              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1.5">
-                Languages
-              </h2>
-              <ul
-                id="languages"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <section>
-              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1.5">
-                Research Interests
-              </h2>
-              <ul
-                id="research"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-          </aside>
-
-          <!-- Main -->
-          <main>
-            <section class="mb-3">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Education
-              </h2>
-              <div id="education" class="space-y-2"></div>
-            </section>
-
-            <hr class="border-slate-300/60 my-3" />
-
-            <section class="mb-4">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Relevant Coursework
-              </h2>
-              <div
-                id="coursework"
-                class="grid grid-cols-2 text-[13px] border border-slate-300 rounded-sm divide-x divide-slate-300"
-              >
-                <!-- rows injected by JS -->
-              </div>
-            </section>
-
-            <hr class="border-slate-300/60 my-3" />
-
-            <section class="mb-3">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Projects
-              </h2>
-              <ul
-                id="projects"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <hr class="border-slate-300/60 my-3" />
-
-            <section class="mb-3">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Achievements
-              </h2>
-              <ul
-                id="achievements"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <hr class="border-slate-300/60 my-3" />
-
-            <section class="mb-3">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Positions of Responsibility
-              </h2>
-              <ul
-                id="positions"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <hr class="border-slate-300/60 my-3" />
-
-            <section class="mb-3">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                Certifications & Workshops
-              </h2>
-              <ul
-                id="certifications"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-
-            <hr class="border-slate-300/60 my-0" />
-
-            <section class="mb-1">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
-                References
-              </h2>
-              <ul
-                id="references"
-                class="list-disc pl-4 text-[13px] leading-5 text-slate-800"
-              ></ul>
-            </section>
-          </main>
-        </div>
-
-        <!-- Footer -->
-        <!-- <div class="px-6 pb-5 text-center text-xs text-slate-500">Page 1</div> -->
       </div>
     </div>
 
-    <!-- html2pdf for clean PDF export without browser headers/footers -->
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
-      integrity="sha512-YcsIPWZf96tqM0bRFTv1MZ+q9y5YkzjQ5q0VqkW3Om8XlD5VJb4gZrGPGw5P3YyM3kQwVh0sTx3nWZCw4iZ0NQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+    <!-- Page -->
+    <div class="py-6">
+      <div class="max-w-screen-lg mx-auto px-4">
+        <div
+          id="resume-page"
+          class="mx-auto bg-white page-shadow rounded-sm w-[210mm] h-[297mm] shadow-2xl overflow-hidden"
+        >
+          <!-- Scaling wrapper to ensure content always fits in one page -->
+          <div id="scale-wrap" class="w-[210mm] h-[297mm] origin-top-left">
+            <div id="resume-root" class="p-8 text-[10pt] leading-snug"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data and Script -->
     <script src="./data.js"></script>
     <script src="./script.js"></script>
   </body>
