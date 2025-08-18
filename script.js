@@ -169,11 +169,11 @@ function renderCoursework() {
     row.className = "contents border-t first:border-t-0 border-slate-300";
 
     const left = document.createElement("div");
-    left.className = "px-2 py-1.5";
+    left.className = "px-2 py-0.5";
     left.textContent = data.coursework[i] || "";
 
     const right = document.createElement("div");
-    right.className = "px-2 py-1.5";
+    right.className = "px-2 py-0.5";
     right.textContent = data.coursework[i + 1] || "";
 
     root.appendChild(left);
@@ -192,12 +192,15 @@ function setupPrint() {
     // Prefer html2pdf when available to avoid browser date/url headers
     if (window.html2pdf) {
       const opt = {
-        margin: [5, 5, 5, 5], // mm
+        margin: [2, 2, 2, 2], // mm - reduce margins for better fit
         filename: `Md_Taj_Hasan_Resume.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff" },
         jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        pagebreak: { avoid: [".avoid-break"], mode: ["css", "legacy"] },
+        pagebreak: {
+          avoid: ["section", "div", "table"],
+          mode: ["css", "legacy"],
+        },
       };
       window.html2pdf().set(opt).from(page).save();
     } else {

@@ -23,6 +23,12 @@
           -webkit-print-color-adjust: exact;
           print-color-adjust: exact;
         }
+        /* Force specific height to prevent overflow */
+        html,
+        body {
+          height: 100%;
+          overflow-y: hidden;
+        }
         /* Remove outer spacing to maximize printable area */
         .no-print {
           display: none !important;
@@ -33,7 +39,25 @@
         /* Center page and prevent accidental overflows */
         #page {
           margin: 0 auto !important;
+          transform: scale(0.92);
+          transform-origin: top center;
+          height: 297mm !important;
         }
+      }
+      /* Compression styles for better fitting on one page */
+      .compress-spacing section {
+        margin-bottom: 0.5rem !important;
+      }
+      .compress-spacing section h2 {
+        margin-bottom: 0.25rem !important;
+      }
+      hr.compress-spacing {
+        margin-top: 0.25rem !important;
+        margin-bottom: 0.25rem !important;
+      }
+      .compress-spacing ul li {
+        margin-bottom: 0 !important;
+        line-height: 1.2 !important;
       }
     </style>
   </head>
@@ -52,7 +76,7 @@
       <!-- Page -->
       <div
         id="page"
-        class="w-[210mm] min-h-[297mm] bg-white shadow shadow-slate-200 shadow-print-none mx-auto"
+        class="w-[210mm] h-[297mm] bg-white shadow shadow-slate-200 shadow-print-none mx-auto compress-spacing"
       >
         <!-- Header -->
         <div class="relative">
@@ -98,11 +122,9 @@
         <!-- Body: two columns -->
         <div class="grid grid-cols-[64mm_1fr] gap-6 p-6">
           <!-- Sidebar -->
-          <aside class="bg-[#E6F0FF] rounded-sm px-4 py-4">
-            <section class="mb-4">
-              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1.5">
-                Profile
-              </h2>
+          <aside class="bg-[#E6F0FF] rounded-sm px-4 py-3">
+            <section class="mb-2">
+              <h2 class="text-sm font-semibold text-[#0E3A8A] mb-1">Profile</h2>
               <p id="profile" class="text-[13px] leading-5 text-slate-800"></p>
             </section>
 
@@ -145,9 +167,9 @@
           </aside>
 
           <!-- Main -->
-          <main>
-            <section class="mb-4">
-              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
+          <main class="space-y-1">
+            <section class="mb-2">
+              <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1">
                 Education
               </h2>
               <div id="education" class="space-y-2"></div>
@@ -167,7 +189,7 @@
               </div>
             </section>
 
-            <hr class="border-slate-300/60 my-3" />
+            <hr class="border-slate-300/60 my-1" />
 
             <section class="mb-4">
               <h2 class="text-[15px] font-semibold text-[#0E3A8A] mb-1.5">
