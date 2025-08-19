@@ -1,0 +1,220 @@
+%-------------------------
+% Resume in Latex
+% Author
+% License : MIT
+%------------------------
+
+\documentclass[a4paper,11pt]{article}
+\usepackage{latexsym}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{ragged2e}
+\usepackage[empty]{fullpage}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{tabularx}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{marvosym}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{cfr-lm}
+\usepackage[T1]{fontenc}
+\setlength{\multicolsep}{0pt} 
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\geometry{left=1.4cm, top=0.8cm, right=1.2cm, bottom=1cm}
+\usepackage[most]{tcolorbox}
+\tcbset{
+	frame code={},
+	center title,
+	left=0pt,
+	right=0pt,
+	top=0pt,
+	bottom=0pt,
+	colback=gray!20,
+	colframe=white,
+	width=\dimexpr\textwidth\relax,
+	enlarge left by=-2mm,
+	boxsep=4pt,
+	arc=0pt,outer arc=0pt,
+}
+
+\urlstyle{same}
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-7pt}]
+
+\newcommand{\resumeItem}[2]{
+  \item{
+    \textbf{#1}{\hspace{0.5mm}#2 \vspace{-0.5mm}}
+  }
+}
+
+\newcommand{\resumePOR}[3]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1}\hspace{0.3mm}#2 & \textit{\small{#3}} 
+    \end{tabular*}
+    \vspace{-2mm}
+}
+
+\newcommand{\resumeSubheading}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#4}} \\
+        \textit{\footnotesize{#3}} &  \footnotesize{#2}\\
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\newcommand{\resumeProject}[4]{
+\vspace{0.5mm}\item
+    \begin{tabular*}{0.98\textwidth}[t]{l@{\extracolsep{\fill}}r}
+        \textbf{#1} & \textit{\footnotesize{#3}} \\
+        \footnotesize{\textit{#2}} & \footnotesize{#4}
+    \end{tabular*}
+    \vspace{-2.4mm}
+}
+
+\renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=0mm]}
+\newcommand{\resumeHeadingSkillStart}{\begin{itemize}[leftmargin=*,itemsep=1.7mm, rightmargin=2ex]}
+\newcommand{\resumeItemListStart}{\begin{justify}\begin{itemize}[leftmargin=3ex, rightmargin=2ex, noitemsep,labelsep=1.2mm,itemsep=0mm]\small}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{2mm}}
+\newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-2mm}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-2mm}}
+\newcommand{\cvsection}[1]{%
+\vspace{2mm}
+\begin{tcolorbox}
+    \textbf{\large #1}
+\end{tcolorbox}
+    \vspace{-4mm}
+}
+
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}%
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}%
+\newcolumntype{C}{>{\centering\arraybackslash}X}%
+
+%-------------------------------------------
+%%%%%%  CV STARTS HERE  %%%%%%%%%%%
+\newcommand{\name}{Md Taj Hasan}
+\newcommand{\course}{M.Sc. Applied Mathematics}
+\newcommand{\roll}{24MAC1R15}
+\newcommand{\phone}{9572242235}
+\newcommand{\emaila}{mdtajh52@gmail.com}
+\newcommand{\emailb}{mt24mac1r15@student.nitw.ac.in}
+
+\begin{document}
+\fontfamily{cmr}\selectfont
+
+%----------HEADING-----------------
+\parbox{2.35cm}{%
+\includegraphics[width=2.35cm,clip]{Mnit_logo_bw.png}
+}
+\parbox{\dimexpr\linewidth-2.8cm\relax}{
+\begin{tabularx}{\linewidth}{L r} \\
+  \textbf{\Large \name} & {\raisebox{0.0\height}{\footnotesize \faPhone}\ +91-\phone}\\
+  {Roll No.: \roll} & \href{mailto:\emaila}{\raisebox{0.0\height}{\footnotesize \faEnvelope}\ {\emaila}} \\
+  \course &  \href{mailto:\emailb}{\raisebox{0.0\height}{\footnotesize \faEnvelope}\ {\emailb}}\\
+  {Mathematics and Scientific Computing} & \href{https://linkedin.com/in/md-taj-hasan-90ab64341}{\raisebox{0.0\height}{\footnotesize \faLinkedin}\ {Md Taj Hasan}}\\
+  {National Institute Of Technology, Warangal} 
+\end{tabularx}
+}
+
+%-----------EDUCATION-----------
+\section{\textbf{Education}}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {National Institute of Technology, Warangal}{CGPA: 7.30 (as of May 2025)}
+    {M.Sc. Applied Mathematics}{2024–2025}
+  \resumeSubheading
+    {Vinoba Bhave University, Hazaribagh}{CGPA: 6.51}
+    {B.Sc. Mathematics (Hons.)}{2019–2022}
+  \resumeSubheading
+    {Giridih (+2) High School}{62.2\%}
+    {Jharkhand Academic Council (12th)}{2019}
+  \resumeSubheading
+    {Upgraded High School, Charghara}{66.4\%}
+    {Jharkhand Academic Council (10th)}{2017}
+\resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------
+\section{\textbf{Experience}}
+\resumeSubHeadingListStart
+  \resumeSubheading
+    {Private Tutor}{Giridih, Jharkhand}
+    {Mathematics Teacher (Classes 9–12)}{2022–2024}
+    \resumeItemListStart
+      \item Taught Mathematics to students of classes 9th to 12th for 2 years.
+      \item Focused on building strong fundamentals and exam-oriented problem solving.
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+
+%-----------COURSEWORK-----------
+\section{\textbf{Coursework}}
+\begin{itemize}[leftmargin=0.05in, label={}]
+  \small{\item{
+   Advanced Linear Algebra, Real Analysis, Probability \& Statistics, \\
+   Complex Analysis, Ordinary \& Partial Differential Equations, \\
+   Numerical Analysis, Topology, Computer Programming in C++, \\
+   Numerical Computing Lab, Symbolic Computing Lab, \\
+   Probability \& Statistics with R Lab, C++ Lab
+  }}
+\end{itemize}
+
+%-----------PROJECTS-----------
+\section{\textbf{Projects}}
+\resumeSubHeadingListStart
+  \resumeProject
+    {Probability and Statistics using R}{Exploratory data analysis and simulation tasks in R}{2024}{}
+    \resumeItemListStart
+      \item Tools: R, RStudio
+      \item Applied statistical tests and visualizations
+    \resumeItemListEnd
+
+  \resumeProject
+    {Numerical Analysis with Python}{Implemented root-finding, interpolation, ODE solvers}{2024}{}
+    \resumeItemListStart
+      \item Tools: Python, NumPy, Matplotlib
+      \item Analyzed error and stability in numerical solutions
+    \resumeItemListEnd
+\resumeSubHeadingListEnd
+
+%-----------SKILLS-----------
+\section{\textbf{Technical Skills and Interests}}
+\begin{itemize}[leftmargin=0.05in, label={}]
+  \small{\item{
+  \textbf{Interests}{: Mathematics, Teaching} \\
+   \textbf{Technical Skills}{: Python} \\
+   \textbf{Communication Languages}{: English, Hindi, Urdu} \\
+   \textbf{Hobbies}{: Reading Books, Playing Cricket} \\
+  }}
+\end{itemize}
+
+%-----------POSITIONS-----------
+\section{\textbf{Positions of Responsibility}}
+\resumeSubHeadingListStart
+  \resumePOR{Class Representative}{NIT Warangal}{2025–Present}
+  \resumePOR{Peer Tutor}{Assisted juniors with Calculus \& Linear Algebra}{2024–2025}
+\resumeSubHeadingListEnd
+
+%-----------ACHIEVEMENTS-----------
+\section{\textbf{Achievements}}
+\resumeSubHeadingListStart
+  \resumePOR{IIT-JAM Mathematics}{All India Rank 712}{2024}
+  \resumePOR{JEE Main}{Qualified}{2019}
+\resumeSubHeadingListEnd
+
+\end{document}
