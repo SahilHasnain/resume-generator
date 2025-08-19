@@ -1,159 +1,230 @@
-// Data is now loaded from data.js as a global `data` constant
+// Populate resume data when the document is ready
+document.addEventListener("DOMContentLoaded", () => {
+  populateResumeData();
+  setupEventListeners();
+});
 
-function fillBasics() {
-  document.getElementById("name").textContent = data.name;
-  document.getElementById("tagline").textContent = data.tagline;
+// Populate all resume sections with data from data.js
+function populateResumeData() {
+  // Populate header information
+  document.getElementById("name").textContent = resumeData.name;
+  document.getElementById("roll").textContent = `Roll No.: ${resumeData.roll}`;
+  document.getElementById("course").textContent = resumeData.course;
+  document.getElementById("department").textContent = resumeData.department;
+  document.getElementById("institution").textContent = resumeData.institution;
 
-  const emailLink = document.getElementById("emailLink");
-  document.getElementById("emailText").textContent = data.email;
-  emailLink.href = `mailto:${data.email}`;
+  // Populate contact information
+  document.getElementById("phone").textContent = `+91-${resumeData.phone}`;
 
-  const phoneLink = document.getElementById("phoneLink");
-  document.getElementById("phoneText").textContent = data.phone;
-  phoneLink.href = `tel:${data.phone.replace(/\s|\+/g, "")}`;
+  const email1 = document.getElementById("email1");
+  email1.textContent = resumeData.emails.personal;
+  email1.href = `mailto:${resumeData.emails.personal}`;
 
-  document.getElementById("locationText").textContent = data.location;
+  const email2 = document.getElementById("email2");
+  email2.textContent = resumeData.emails.academic;
+  email2.href = `mailto:${resumeData.emails.academic}`;
 
-  const linkedin = document.getElementById("linkedinLink");
-  document.getElementById("linkedinText").textContent = data.linkedin.text;
-  linkedin.href = data.linkedin.url;
+  const linkedin = document.getElementById("linkedin");
+  linkedin.textContent = resumeData.name;
+  linkedin.href = `https://linkedin.com/in/${resumeData.linkedin}`;
 
-  document.getElementById("profile").textContent = data.profile;
-}
+  // Populate Education section
+  const educationContainer = document.getElementById("education");
+  resumeData.education.forEach((edu) => {
+    const eduElement = document.createElement("div");
+    eduElement.classList.add("mb-2");
+    eduElement.innerHTML = `
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-medium">${edu.institution}</h3>
+                    <p class="text-gray-600 text-xs italic">${edu.degree}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs font-medium">${edu.score}</p>
+                    <p class="text-gray-600 text-xs">${edu.duration}</p>
+                </div>
+            </div>
+        `;
+    educationContainer.appendChild(eduElement);
+  });
 
-function fillList(id, items) {
-  const ul = document.getElementById(id);
-  ul.innerHTML = "";
-  items.forEach((t) => {
-    const li = document.createElement("li");
-    li.textContent = t;
-    ul.appendChild(li);
+  // Populate Experience section
+  const experienceContainer = document.getElementById("experience");
+  resumeData.experience.forEach((exp) => {
+    const expElement = document.createElement("div");
+    expElement.classList.add("mb-2");
+
+    let pointsHTML = "";
+    if (exp.points && exp.points.length > 0) {
+      pointsHTML = `
+                <ul class="bullet-list mt-1">
+                    ${exp.points.map((point) => `<li>${point}</li>`).join("")}
+                </ul>
+            `;
+    }
+
+    expElement.innerHTML = `
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-medium">${exp.title}</h3>
+                    <p class="text-gray-600 text-xs italic">${exp.role}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs font-medium">${exp.location}</p>
+                    <p class="text-gray-600 text-xs">${exp.duration}</p>
+                </div>
+            </div>
+            ${pointsHTML}
+        `;
+    experienceContainer.appendChild(expElement);
+  });
+
+  // Populate Projects section
+  const projectsContainer = document.getElementById("projects");
+  resumeData.projects.forEach((project) => {
+    const projectElement = document.createElement("div");
+    projectElement.classList.add("mb-2");
+
+    let pointsHTML = "";
+    if (project.points && project.points.length > 0) {
+      pointsHTML = `
+                <ul class="bullet-list mt-1">
+                    ${project.points
+                      .map((point) => `<li>${point}</li>`)
+                      .join("")}
+                </ul>
+            `;
+    }
+
+    projectElement.innerHTML = `
+            <div class="flex justify-between items-start">
+                <div>
+                    <h3 class="font-medium">${project.title}</h3>
+                    <p class="text-gray-600 text-xs italic">${project.description}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-gray-600 text-xs">${project.year}</p>
+                </div>
+            </div>
+            ${pointsHTML}
+        `;
+    projectsContainer.appendChild(projectElement);
+  });
+
+  // Populate Skills section
+  const skillsContainer = document.getElementById("skills");
+
+  const createSkillItem = (title, items) => {
+    const element = document.createElement("div");
+    element.innerHTML = `
+            <p><span class="font-medium">${title}:</span> ${items.join(
+      ", "
+    )}</p>
+        `;
+    return element;
+  };
+
+  skillsContainer.appendChild(
+    createSkillItem("Interests", resumeData.skills.interests)
+  );
+  skillsContainer.appendChild(
+    createSkillItem("Technical Skills", resumeData.skills.technical)
+  );
+  skillsContainer.appendChild(
+    createSkillItem("Communication Languages", resumeData.skills.languages)
+  );
+  skillsContainer.appendChild(
+    createSkillItem("Hobbies", resumeData.skills.hobbies)
+  );
+
+  // Populate Coursework section
+  const courseworkContainer = document.getElementById("coursework");
+  const courseworkElement = document.createElement("p");
+  courseworkElement.textContent = resumeData.coursework.join(", ");
+  courseworkElement.classList.add("text-sm");
+  courseworkContainer.appendChild(courseworkElement);
+
+  // Populate Positions section
+  const positionsContainer = document.getElementById("positions");
+  resumeData.positions.forEach((position) => {
+    const positionElement = document.createElement("div");
+    positionElement.classList.add("flex", "justify-between", "items-start");
+
+    positionElement.innerHTML = `
+            <div>
+                <p class="font-medium">${position.role}</p>
+                <p class="text-gray-600 text-xs">${position.institution}</p>
+            </div>
+            <p class="text-gray-600 text-xs">${position.duration}</p>
+        `;
+
+    positionsContainer.appendChild(positionElement);
+  });
+
+  // Populate Achievements section
+  const achievementsContainer = document.getElementById("achievements");
+  resumeData.achievements.forEach((achievement) => {
+    const achievementElement = document.createElement("div");
+    achievementElement.classList.add("flex", "justify-between", "items-start");
+
+    achievementElement.innerHTML = `
+            <p class="font-medium">${achievement.title}</p>
+            <p class="text-gray-600 text-xs">${achievement.description}</p>
+        `;
+
+    achievementsContainer.appendChild(achievementElement);
   });
 }
 
-function renderSkills() {
-  const root = document.getElementById("skills");
-  root.innerHTML = "";
-  data.skills.forEach((s) => {
-    const wrap = document.createElement("div");
-    wrap.className = "space-y-1";
+// Set up event listeners for buttons
+function setupEventListeners() {
+  // Download PDF button
+  document.getElementById("downloadBtn").addEventListener("click", function () {
+    const resumeElement = document.getElementById("resume");
 
-    const label = document.createElement("div");
-    label.className = "text-[12px] text-slate-800";
-    label.textContent = s.label;
+    // Configure html2pdf options
+    const options = {
+      margin: [0, 0, 0, 0],
+      filename: `${resumeData.name.replace(/\s+/g, "_")}_Resume.pdf`,
+      image: { type: "jpeg", quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, logging: false },
+      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+    };
 
-    const barBg = document.createElement("div");
-    barBg.className = "h-1.5 bg-slate-200 rounded";
+    // Generate the PDF
+    html2pdf().set(options).from(resumeElement).save();
+  });
 
-    const bar = document.createElement("div");
-    bar.className = "h-1.5 bg-blue-700 rounded";
-    bar.style.width = `${Math.max(0, Math.min(1, s.level)) * 100}%`;
-
-    barBg.appendChild(bar);
-    wrap.appendChild(label);
-    wrap.appendChild(barBg);
-
-    root.appendChild(wrap);
+  // Print button
+  document.getElementById("printBtn").addEventListener("click", function () {
+    window.print();
   });
 }
 
-function renderEducation() {
-  const root = document.getElementById("education");
-  root.innerHTML = "";
-  data.education.forEach((e) => {
-    const item = document.createElement("div");
-    const title = document.createElement("div");
-    title.className = "text-[14px] font-semibold text-slate-900";
-    title.textContent = e.title;
+// Function to adjust font sizes if content is too large for single page
+function adjustFontSizesIfNeeded() {
+  const resumeContainer = document.getElementById("resume");
+  const containerHeight = resumeContainer.offsetHeight;
 
-    const meta = document.createElement("div");
-    meta.className = "text-[12.5px] text-slate-600";
-    meta.textContent = e.meta;
+  // Check if the content is taller than the container (11 inches in pixels)
+  if (containerHeight > 11 * 96) {
+    // 96 DPI is typical for screen
+    // Get all text elements
+    const textElements = resumeContainer.querySelectorAll("p, h1, h2, h3, li");
 
-    item.appendChild(title);
-    item.appendChild(meta);
-    root.appendChild(item);
-  });
-}
+    // Reduce their font size slightly
+    textElements.forEach((el) => {
+      const currentSize = window.getComputedStyle(el).fontSize;
+      const newSize = parseFloat(currentSize) * 0.95;
+      el.style.fontSize = `${newSize}px`;
+    });
 
-function renderCoursework() {
-  const root = document.getElementById("coursework");
-  root.innerHTML = "";
-  // Build 2-column rows
-  for (let i = 0; i < data.coursework.length; i += 2) {
-    const row = document.createElement("div");
-    row.className = "contents border-t first:border-t-0 border-slate-300";
-
-    const left = document.createElement("div");
-    left.className = "px-2 py-0.5";
-    left.textContent = data.coursework[i] || "";
-
-    const right = document.createElement("div");
-    right.className = "px-2 py-0.5";
-    right.textContent = data.coursework[i + 1] || "";
-
-    root.appendChild(left);
-    root.appendChild(right);
+    // Check again after a slight delay for the DOM to update
+    setTimeout(adjustFontSizesIfNeeded, 100);
   }
 }
 
-function renderBullets(id, items) {
-  fillList(id, items);
-}
-
-function setupPrint() {
-  const btn = document.getElementById("btnPrint");
-  btn.addEventListener("click", () => {
-    const page = document.getElementById("page");
-    // Prefer html2pdf when available to avoid browser date/url headers
-    if (window.html2pdf) {
-      // Ensure capture with zero margins and no shadows
-      document.body.classList.add("pdf-mode");
-      // Avoid scroll offset affecting capture
-      window.scrollTo(0, 0);
-      const opt = {
-        margin: [0, 0, 0, 0], // mm
-        filename: `Md_Taj_Hasan_Resume.pdf`,
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          backgroundColor: "#ffffff",
-          scrollX: 0,
-          scrollY: 0,
-        },
-        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        pagebreak: { avoid: [".avoid-break"], mode: ["css", "legacy"] },
-      };
-      window
-        .html2pdf()
-        .set(opt)
-        .from(page)
-        .save()
-        .finally(() => {
-          // Clean up
-          document.body.classList.remove("pdf-mode");
-        });
-    } else {
-      window.print();
-    }
-  });
-}
-
-function init() {
-  fillBasics();
-  fillList("teaching", data.teaching);
-  renderSkills();
-  fillList("languages", data.languages);
-  renderBullets("research", data.research);
-  renderEducation();
-  renderCoursework();
-  renderBullets("projects", data.projects);
-  renderBullets("achievements", data.achievements);
-  renderBullets("positions", data.positions);
-  renderBullets("certifications", data.certifications);
-  renderBullets("references", data.references);
-  setupPrint();
-}
-
-init();
+// Call this function after populating the resume
+window.addEventListener("load", function () {
+  setTimeout(adjustFontSizesIfNeeded, 500);
+});
