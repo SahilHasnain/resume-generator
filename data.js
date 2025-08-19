@@ -1,86 +1,116 @@
-// Resume data separated from logic so it can be edited independently
-// Keep property names consistent with script.js expectations
-const data = {
+// Resume Data
+const resumeData = {
   name: "Md Taj Hasan",
-  tagline: "M.Sc. Applied Mathematics | Aspiring Educator & Problem Solver",
-  email: "mt24mac1r15@student.nitw.ac.in",
-  phone: "+91-9572242235",
-  location: "Giridih, Jharkhand 815312",
-  linkedin: {
-    text: "Md Taj Hasan",
-    url: "https://linkedin.com/in/md-taj-hasan-90ab64341",
+  course: "M.Sc. Applied Mathematics",
+  roll: "24MAC1R15",
+  phone: "9572242235",
+  emails: {
+    personal: "mdtajh52@gmail.com",
+    academic: "mt24mac1r15@student.nitw.ac.in",
   },
-  profile:
-    "Motivated postgraduate student in Applied Mathematics with a passion for teaching and problem solving. I focus on building strong fundamentals and connecting math with real-life use-cases to help learners think clearly and independently.",
-  teaching: [
-    "Matrices & Determinants",
-    "Limit, Continuity & Differentiability",
-    "Differential & Integral Calculus",
-  ],
-  skills: [
-    { label: "Python", level: 0.7 },
-    { label: "Mathematical Problem Solving", level: 0.9 },
-    { label: "Proof Writing", level: 0.75 },
-    { label: "LaTeX / MATLAB (placeholder)", level: 0.6 },
-  ],
-  languages: ["English", "Hindi", "Urdu"],
-  research: [
-    "Numerical Analysis",
-    "Mathematical Modelling",
-    "Optimization",
-    "[Placeholder: Scientific Computing]",
-  ],
+  linkedin: "md-taj-hasan-90ab64341",
+  department: "Mathematics and Scientific Computing",
+  institution: "National Institute Of Technology, Warangal",
   education: [
     {
-      title: "M.Sc. in Applied Mathematics",
-      meta: "NIT Warangal | 2025 – Present | CGPA: 7.30 (as of May 2025)",
+      institution: "National Institute of Technology, Warangal",
+      score: "CGPA: 7.30 (as of May 2025)",
+      degree: "M.Sc. Applied Mathematics",
+      duration: "2024–2025",
     },
     {
-      title: "B.Sc. in Mathematics (Hons.)",
-      meta: "Vinoba Bhave University, Hazaribagh | 2019 – 2022 | CGPA: 6.51",
+      institution: "Vinoba Bhave University, Hazaribagh",
+      score: "CGPA: 6.51",
+      degree: "B.Sc. Mathematics (Hons.)",
+      duration: "2019–2022",
     },
     {
-      title: "Intermediate (Class 12th)",
-      meta: "Giridih (+2) High School, JAC | 2019 | 62.2%",
+      institution: "Giridih (+2) High School",
+      score: "62.2%",
+      degree: "Jharkhand Academic Council (12th)",
+      duration: "2019",
     },
     {
-      title: "Matriculation (Class 10th)",
-      meta: "Upgraded High School, Charghara, JAC | 2017 | 66.4%",
+      institution: "Upgraded High School, Charghara",
+      score: "66.4%",
+      degree: "Jharkhand Academic Council (10th)",
+      duration: "2017",
+    },
+  ],
+  experience: [
+    {
+      title: "Private Tutor",
+      location: "Giridih, Jharkhand",
+      role: "Mathematics Teacher (Classes 9–12)",
+      duration: "2022–2024",
+      points: [
+        "Taught Mathematics to students of classes 9th to 12th for 2 years.",
+        "Focused on building strong fundamentals and exam-oriented problem solving.",
+      ],
     },
   ],
   coursework: [
     "Advanced Linear Algebra",
-    "Complex Analysis",
-    "Ordinary Differential Equations",
-    "Partial Differential Equations",
     "Real Analysis",
     "Probability & Statistics",
-    "Topology",
+    "Complex Analysis",
+    "Ordinary & Partial Differential Equations",
     "Numerical Analysis",
+    "Topology",
     "Computer Programming in C++",
     "Numerical Computing Lab",
-    "C++ Lab",
-    "Probability & Statistics with R Lab",
     "Symbolic Computing Lab",
+    "Probability & Statistics with R Lab",
+    "C++ Lab",
   ],
   projects: [
-    "Solution of Probability and Statistics using R — Exploratory data analysis and simulation tasks in R; applied statistical tests and visualizations.",
-    "[Placeholder: Numerical Analysis with Python] — Implemented root-finding, interpolation and ODE solvers using Python; analyzed error and stability.",
+    {
+      title: "Probability and Statistics using R",
+      description: "Exploratory data analysis and simulation tasks in R",
+      year: "2024",
+      points: [
+        "Tools: R, RStudio",
+        "Applied statistical tests and visualizations",
+      ],
+    },
+    {
+      title: "Numerical Analysis with Python",
+      description: "Implemented root-finding, interpolation, ODE solvers",
+      year: "2024",
+      points: [
+        "Tools: Python, NumPy, Matplotlib",
+        "Analyzed error and stability in numerical solutions",
+      ],
+    },
+  ],
+  skills: {
+    interests: ["Mathematics", "Teaching"],
+    technical: ["Python"],
+    languages: ["English", "Hindi", "Urdu"],
+    hobbies: ["Reading Books", "Playing Cricket"],
+  },
+  positions: [
+    {
+      role: "Class Representative",
+      institution: "NIT Warangal",
+      duration: "2025–Present",
+    },
+    {
+      role: "Peer Tutor",
+      institution: "Assisted juniors with Calculus & Linear Algebra",
+      duration: "2024–2025",
+    },
   ],
   achievements: [
-    "IIT-JAM Mathematics (2024): All India Rank 712",
-    "JEE Main (2019): Qualified",
-  ],
-  positions: [
-    "[Placeholder: Class Representative / Math Club Volunteer — NITW, 2025–Present]",
-    "[Placeholder: Peer Tutor — Assisted juniors with Calculus & Linear Algebra]",
-  ],
-  certifications: [
-    "[Placeholder: NPTEL — Probability & Statistics / Linear Algebra (Year)]",
-    "[Placeholder: Workshop — LaTeX for Scientific Writing / MATLAB for Engineers]",
-  ],
-  references: [
-    "[Placeholder: Dr. <Advisor Name>, Assistant Professor, Dept. of Mathematics, NIT Warangal — advisor@nitw.ac.in]",
-    "Available upon request.",
+    {
+      title: "IIT-JAM Mathematics",
+      description: "All India Rank 712",
+      year: "2024",
+    },
+    {
+      title: "JEE Main",
+      description: "Qualified",
+      year: "2019",
+    },
   ],
 };
