@@ -11,7 +11,6 @@
 \usepackage{ragged2e}
 \usepackage[empty]{fullpage}
 \usepackage{wrapfig}
-\usepackage{lipsum}
 \usepackage{tabularx}
 \usepackage{titlesec}
 \usepackage{geometry}
@@ -24,31 +23,36 @@
 \usepackage{multicol}
 \usepackage{graphicx}
 \usepackage{cfr-lm}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue
+}
 \usepackage[T1]{fontenc}
 \setlength{\multicolsep}{0pt} 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyfoot{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 \geometry{left=1.4cm, top=0.8cm, right=1.2cm, bottom=1cm}
 \usepackage[most]{tcolorbox}
 \tcbset{
-	frame code={},
-	center title,
-	left=0pt,
-	right=0pt,
-	top=0pt,
-	bottom=0pt,
-	colback=gray!20,
-	colframe=white,
-	width=\dimexpr\textwidth\relax,
-	enlarge left by=-2mm,
-	boxsep=4pt,
-	arc=0pt,outer arc=0pt,
+    frame code={},
+    center title,
+    left=0pt,
+    right=0pt,
+    top=0pt,
+    bottom=0pt,
+    colback=gray!20,
+    colframe=white,
+    width=\dimexpr\textwidth\relax,
+    enlarge left by=-2mm,
+    boxsep=4pt,
+    arc=0pt,outer arc=0pt,
 }
 
 \urlstyle{same}
+
 \raggedright
 \setlength{\tabcolsep}{0in}
 
@@ -88,10 +92,13 @@
     \vspace{-2.4mm}
 }
 
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
 \renewcommand{\labelitemi}{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*,labelsep=0mm]}
 \newcommand{\resumeHeadingSkillStart}{\begin{itemize}[leftmargin=*,itemsep=1.7mm, rightmargin=2ex]}
 \newcommand{\resumeItemListStart}{\begin{justify}\begin{itemize}[leftmargin=3ex, rightmargin=2ex, noitemsep,labelsep=1.2mm,itemsep=0mm]\small}
+
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}\vspace{2mm}}
 \newcommand{\resumeHeadingSkillEnd}{\end{itemize}\vspace{-2mm}}
 \newcommand{\resumeItemListEnd}{\end{itemize}\end{justify}\vspace{-2mm}}
@@ -107,10 +114,8 @@
 \newcolumntype{R}{>{\raggedleft\arraybackslash}X}%
 \newcolumntype{C}{>{\centering\arraybackslash}X}%
 
-%-------------------------------------------
-%%%%%%  CV STARTS HERE  %%%%%%%%%%%
 \newcommand{\name}{Md Taj Hasan}
-\newcommand{\course}{M.Sc. Applied Mathematics}
+\newcommand{\course}{Master of Science (M.Sc.) }
 \newcommand{\roll}{24MAC1R15}
 \newcommand{\phone}{9572242235}
 \newcommand{\emaila}{mdtajh52@gmail.com}
@@ -121,73 +126,94 @@
 
 %----------HEADING-----------------
 \parbox{2.35cm}{%
-\includegraphics[width=2.35cm,clip]{Mnit_logo_bw.png}
+\includegraphics[width=2cm,clip]{Mnit_logo_bw.png}
 }
 \parbox{\dimexpr\linewidth-2.8cm\relax}{
-\begin{tabularx}{\linewidth}{L r} \\
-  \textbf{\Large \name} & {\raisebox{0.0\height}{\footnotesize \faPhone}\ +91-\phone}\\
-  {Roll No.: \roll} & \href{mailto:\emaila}{\raisebox{0.0\height}{\footnotesize \faEnvelope}\ {\emaila}} \\
-  \course &  \href{mailto:\emailb}{\raisebox{0.0\height}{\footnotesize \faEnvelope}\ {\emailb}}\\
-  {National Institute Of Technology, Warangal} 
+\begin{tabularx}{\linewidth}{L r}
+  \textbf{\Large Md Taj Hasan} & \faPhone\ +91-9572242235 \\
+  Roll No.: 24MAC1R15 & \href{mailto:mdtajh52@gmail.com}{\faEnvelope\ mdtajh52@gmail.com} \\
+  Master of Science (M.Sc.)  & \href{mailto:mt24mac1r15@student.nitw.ac.in}{\faEnvelope\ mt24mac1r15@student.nitw.ac.in} \\
+  Applied Mathematics & \\
+  National Institute Of Technology, Warangal
 \end{tabularx}
 }
+%-----------EDUCATION-----------
 
 %-----------EDUCATION-----------
 \section{\textbf{Education}}
-\resumeSubHeadingListStart
-  \resumeSubheading
-    {National Institute of Technology, Warangal}{CGPA: 7.30 (as of May 2025)}
-    {M.Sc. Applied Mathematics}{2024–2025}
-  \resumeSubheading
-    {Vinoba Bhave University, Hazaribagh}{CGPA: 6.51}
-    {B.Sc. Mathematics (Hons.)}{2019–2022}
-  \resumeSubheading
-    {Giridih (+2) High School}{62.2\%}
-    {Jharkhand Academic Council (12th)}{2019}
-  \resumeSubheading
-    {Upgraded High School, Charghara}{66.4\%}
-    {Jharkhand Academic Council (10th)}{2017}
-\resumeSubHeadingListEnd
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {National Institute of Technology, Warangal}{CGPA: 7.30 (as of May 2025)}
+      {M.Sc. Applied Mathematics}{2024-2026}
+    \resumeSubheading
+      {Vinoba Bhave University, Hazaribagh}{CGPA: 6.51}
+      {B.Sc. Mathematics (Hons.)}{2019-2022}
+    \resumeSubheading
+      {Giridih (+2) High School}{Percentage: 62.2}
+      {Jharkhand Academic Council (12th)}{2019}
+   \resumeSubheading
+      {Upgraded High School, Charghara}{Percentage: 66.4}
+      {Jharkhand Academic Council (10th)}{2017}
+  \resumeSubHeadingListEnd
 
 %-----------EXPERIENCE-----------
 \section{\textbf{Experience}}
-\resumeSubHeadingListStart
-  \resumeSubheading
-    {Private Tutor}{Giridih, Jharkhand}
-    {Mathematics Teacher (Classes 9–12)}{2022–2024}
-    \resumeItemListStart
-      \item Taught Mathematics to students of classes 9th to 12th for 2 years.
-      \item Focused on building strong fundamentals and exam-oriented problem solving.
-    \resumeItemListEnd
-\resumeSubHeadingListEnd
+
+% Teaching Experience line
+\begin{itemize}
+    \item 2 Years Teaching Experience for Class 9th to 12th (Mathematics). \hfill 2022-2024
+\end{itemize}
+
+% Other items with proper spacing
+\begin{itemize}
+    \item Focused on building strong fundamentals and exam-oriented problem solving.
+\end{itemize}
 
 %-----------COURSEWORK-----------
-\section{\textbf{Coursework}}
-\begin{itemize}[leftmargin=0.05in, label={}]
-  \small{\item{
-   Advanced Linear Algebra, Real Analysis, Probability \& Statistics, \\
-   Complex Analysis, Ordinary \& Partial Differential Equations, \\
-   Numerical Analysis, Topology, Computer Programming in C++, \\
-   Numerical Computing Lab, Symbolic Computing Lab, \\
-   Probability \& Statistics with R Lab, C++ Lab
-  }}
+\section{\textbf{CourseWork}}
+\begin{multicols}{3}
+\begin{itemize}[leftmargin=*, itemsep=1pt]
+  \item Advanced Linear Algebra
+  \item Real Analysis
+  \item Probability and Statistics
+  \item Complex Analysis
+  \item Ordinary Differential Equations
+  \item Partial Differential Equations
+  \item Numerical Analysis
+  \item Topology
+  \item Numerical Computing Lab
+  \item Symbolic Computing Lab
+  \item Modern Algebra
 \end{itemize}
+\end{multicols}
 
-%-----------SKILLS-----------
-\section{\textbf{Technical Skills and Interests}}
-\begin{itemize}[leftmargin=0.05in, label={}]
-  \small{\item{
-  \textbf{Interests}{: Mathematics, Teaching} \\
-   \textbf{Technical Skills}{: Python} \\
-   \textbf{Communication Languages}{: English, Hindi} \\
-   \textbf{Hobbies}{: Reading Books, Playing Cricket} \\
-  }}
-\end{itemize}
+%-----------TECHNICAL SKILLS-----------
+
+\section{\textbf{Skills and Interests}}
+ \begin{itemize}[leftmargin=0.05in, label={}]
+    \small{\item{
+    \hspace{1cm}\\
+     \textbf{Technical Skills}{: Python, C++, Matlab, R, Fortran} \\
+     \hspace{1cm}\\
+     \textbf{Soft Skills}{: Mathematical Thinking and Proof Writing, Mathematical Problem Solving} \\
+     \hspace{1cm}\\
+     \textbf{Communication Language}{: English, Hindi} \\
+     \hspace{1cm}\\
+     \textbf{Hobbies}{: Reading Books, Playing Cricket} \\
+     \hspace{1cm}\\
+     \textbf{Areas of Interest}{: Teaching Mathematics, Student mentoring and academic growth} \\
+    }}
+ \end{itemize}
+
+
+
 
 %-----------ACHIEVEMENTS-----------
 \section{\textbf{Achievements}}
 \resumeSubHeadingListStart
-  \resumePOR{IIT-JAM Mathematics}{All India Rank 712}{2024}
+\resumePOR{IIT-JAM Mathematics} % Award
+    { All India Rank 712} % Event
+    {2024} %Event Year
 \resumeSubHeadingListEnd
 
 \end{document}
